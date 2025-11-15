@@ -62,9 +62,31 @@ static const char *sap_table[256] = {
 static const size_t sap_table_count = 256;
 
 /* -------------------------------------------------------------------------
- *  FUNZIONI PUBBLICHE (da implementare)
+ *  LUT ETHERTYPE 
+ *  Implementata come ...
  * ------------------------------------------------------------------------- */
 
+//Codifica qui il dizionario/tabella Ethertype
+
+//...
+
+/* -------------------------------------------------------------------------
+ *  FUNZIONI PUBBLICHE (da implementare)
+ * ------------------------------------------------------------------------- */
+/* ---------------- TABELLA ETHERTYPE / SNAP ------------------------------ */
+/**
+ * Restituisce il nome del protocollo associato a un Ethertype / protocol_id.
+ *  - value : Ethertype (Ethernet II) oppure protocol_id (SNAP)
+ *
+ * Ritorna una stringa costante (es. "IPv4", "ARP", "IPv6") se noto,
+ * altrimenti "Sconosciuto".
+ *
+ * L'implementazione userà internamente un array statico di proto_desc_t.
+ */
+const char *protocol_name(uint16_t value){
+
+    // ...
+}
 const char *oui_lookup(uint32_t oui)
 {
    // ...

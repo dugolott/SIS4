@@ -38,7 +38,7 @@ Partendo dai sorgenti del libro (pag.9 e pag. 12/13) e dal codice già visto a l
    - Leggere un frame da file di testo o da tastiera (`read_frame_from_text_file`)
    - convertire la stringa esadecimale in byte (`hex_to_bytes`);
    - estrarre l’header Ethernet (`parse_ethernet`);
-   - stampare i campi con `print_eth_summary()` e `print_mac()`.
+   - stampare i campi con `print_eth_summary()`, `print_mac()` e `protocol_name()`.
 
 2. Verificare il corretto riconoscimento del campo **Ethertype** e del protocollo incapsulato.
 
