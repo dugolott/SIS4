@@ -14,7 +14,7 @@ int main()
     int len;
 
     // apro il file di test o leggo da stdin
- 
+    //...
 
     while (1) {
         len = read_frame_from_text_file(fp, buf, sizeof(buf));
