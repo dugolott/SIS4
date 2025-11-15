@@ -100,10 +100,9 @@ AA BB CC DD EE FF 00 11 22 33 44 55 08 00 45 00 00 14 00 00 40 00 40 06 00 00 C0
 
 | Fase | Obiettivo |
 |------|------------|
-| **2** | Aggiungere parsing 802.3 + LLC |
-| **3** | Aggiungere parsing SNAP e decodifica del protocollo incapsulato |
-| **4** | Integrare la LUT OUI per decodificare i vendor MAC |
-| **5** | Estendere a protocolli superiori (ARP, IPv4, ICMP, ecc.) |
+| **2** | Aggiungere parsing 802.3 + LLC + SNAP e caricamento frame come parametri CLI |
+| **3** | Integrare la LUT OUI per decodificare i vendor MAC |
+| **4** | Estendere a protocolli superiori (ARP, IPv4, ICMP, ecc.) |
 
 ---
 

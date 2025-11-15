@@ -41,6 +41,11 @@ typedef struct {
     uint16_t   type_or_len;   /* Ethertype (>=0x0600) oppure lunghezza (<payload_t payload;     /* tutto ciò che viene dopo i 14 byte di header   */
     payload_t payload;
     //uint32_t fcs;      //controllo di integrità (frame check sequence) - x implementazioni future
+    
+    /*  I seguenti campi servono per migliorare la gestione del frame: tipo metadati 
+    e vengono popolati dalla funzione di parsing */
+    frame_type_t frame_type; /* tipo di frame (Ethernet II / 802.3 LLC / 802.3 SNAP) */
+    uint16_t total_len;  /* lunghezza totale del frame (header + payload) */
 }  eth_frame_t;
 
 /* Tipo di frame a livello Ethernet, dedotto da type_or_len + LLC/SNAP */
@@ -87,9 +92,9 @@ typedef struct {
 /* ---------------- HEX → BYTE BUFFER ------------------------------------- */
 /**
  * Converte una stringa esadecimale in un buffer di byte.
- *  - hex      : stringa ASCII (senza 0x, con spazi)
- *  - buf      : buffer di output
- *  - bufsize  : dimensione massima di buf
+ *  @param hex      : stringa ASCII (senza 0x, con spazi)
+ *  @param buf      : buffer di output
+ *  @param bufsize  : dimensione massima di buf
  *
  * Ritorna len (numero di byte scritti in buf) se OK, -1 se:
  *  - lunghezza stringa dispari
@@ -134,9 +139,8 @@ int read_frame_from_text_file(FILE *fp, uint8_t *buf, size_t bufsize);
 /* ---------------- PARSING ETHERNET -------------------------------------- */
 /**
  * Interpreta i primi 14 byte di raw come header Ethernet.
- *  - buf       : vista sul frame completo (L2 + payload)
- *  - eth       : header Ethernet + payload successivo
- *  - tipo  : tipo di frame (Ethernet II / 802.3 LLC / 802.3 SNAP)
+ *  @param buf       : passo il frame completo (L2 + payload) perindirizzo. Perchè non per copia?
+ *  @param eth       : header Ethernet + payload successivo
  *
  * Ritorna len se OK, -1 se raw->len < 14 (unico controllo di integrità).
  *
@@ -145,9 +149,7 @@ int read_frame_from_text_file(FILE *fp, uint8_t *buf, size_t bufsize);
  *  - tipo viene inizializzato in base a type_or_len (>=0x0600 o <=1500).
  *  - la distinzione LLC / SNAP vera e propria avverrà guardando i campi LLC.
  */
-int parse_ethernet(const payload_t *buf,
-                   eth_frame_t *eth,
-                   frame_type_t tipo);
+int parse_ethernet(const payload_t *buf, eth_frame_t *eth);
 
 /* ---------------- PARSING LLC ------------------------------------------- */
 /**
