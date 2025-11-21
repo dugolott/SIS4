@@ -53,15 +53,16 @@ int main(void)
     const char *roles[] = { "Warrior", "Mage", "Rogue", "Paladin" };
 
     /* Array di struct hero_t: il party */
-    hero_t party[5];
+    hero_t party[5];    //Prova a creare un array dinamico con malloc()
 
-    /* Inizializzazione usando solo hero_create() */
+    /* Inizializzazione usando hero_create() */
     party[0] = hero_create("Frodo",  "Per l’Orda!",roles[3], 12);  // Paladin
     party[1] = hero_create("Morgana", "By the arcane!",roles[1], 15);  // Mage
     party[2] = hero_create("Valeera", NULL, roles[2], 10);  // Rogue
     party[3] = hero_create("Garrosh", NULL, roles[0], 14);  // Warrior
     party[4] = hero_create("Jaina",  "For the Alliance!", roles[1], 16);  // Mage
-    /* Imposto un battlecry per alcuni membri */
+    
+    /* Imposto un battlecry a posteriori*/
     snprintf(party[2].battlecry, sizeof party[0].battlecry,
              "For the Lich King!");
             
