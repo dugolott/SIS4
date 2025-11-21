@@ -35,7 +35,12 @@ void hero_print(const hero_t *h) //Uso del puntatore per efficienza
 {
     printf("              Eroe: %s\n", h->name); //pei ipuntatori a struct si usa la freccia ->, non il punto .
     printf("            Classe: %s\n", h->role);
-    printf("Grido di battaglia: %s\n", h->battlecry);
+    printf("Grido di battaglia: ");
+    if (h->battlecry[0] != '\0')
+        printf("\"%s\"\n", h->battlecry);
+    else
+        printf("(none)\n");
+
     printf("           Livello: %d\n\n", h->level);
 }
 
