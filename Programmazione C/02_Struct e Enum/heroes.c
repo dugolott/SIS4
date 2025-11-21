@@ -33,10 +33,10 @@ hero_t hero_create(const char *name, const char *battlecry, const char *role, in
 /* Stampa i dettagli dell’eroe */
 void hero_print(const hero_t *h) //Uso del puntatore per efficienza
 {
-    printf("     Eroe: %s\n", h->name); //pei ipuntatori a struct si usa la freccia ->, non il punto .
-    printf("   Classe: %s\n", h->role);
-    printf("Battlecry: %s\n", h->battlecry);
-    printf("  Livello: %d\n\n", h->level);
+    printf("              Eroe: %s\n", h->name); //pei ipuntatori a struct si usa la freccia ->, non il punto .
+    printf("            Classe: %s\n", h->role);
+    printf("Grido di battaglia: %s\n", h->battlecry);
+    printf("           Livello: %d\n\n", h->level);
 }
 
 /* Aumenta il livello dell’eroe */
