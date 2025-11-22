@@ -45,7 +45,36 @@ Partendo dai sorgenti del libro (pag.9 e pag. 12/13) e dal codice già visto a l
 3. Testare la decodifica con i seguenti **frame Ethernet II**:
 
 #### 🔹 **Fase 2 – Decodifica LLC e SNAP**
-Prossimamente...
+Il programma dovrà:
+
+- leggere frame da file o da stdin
+- distinguere Ethernet II e 802.3
+- decodificare LLC > SNAP se necessario
+- stampare un riepilogo completo dei livelli decodificati
+
+#### Passi da seguire:
+
+1. **Aggiungere il parsing dei parametri da linea di comando (CLI)**:
+   - Nessun argomento → input da `stdin`
+   - Un argomento → percorso file contenente i frame
+   - `-h` o `--help` → mostra l’uso
+   - Errore per più di un argomento
+   - suggerimento:implementa una funzione `cli_parse()`
+
+2. **Riconoscere frame 802.3 oltre a Ethernet II**:
+   - `type_or_len >= 0x0600` → Ethernet II (già implementato)
+   - `type_or_len < 0x0600` → 802.3  →  richiama `parse_llc()` (da implementare)
+   - e di conseguenza `parse_snap()`
+
+3. **Aggiornare il main** per gestire:
+   ```
+   CLI → lettura frame → parse_ethernet → parse_llc → parse_snap → stampa
+   ```
+
+4. **Completare e integrare strutture** in `tables.c`:
+   - completare `sap_table` e `sap_lookup()`
+   - se non ancora fatto, aggiungere opportuna struttura per Ethertype `ethertype_table`e conseguente funzione di lookup sglegliendo tra le tecniche illustrate
+   - aggiornare funzioni per la stampa dei nomi LLC, SNAP e OUI
 
 ---
 
