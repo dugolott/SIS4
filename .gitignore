@@ -1,18 +1,15 @@
-# prevenire commit di file eseguibili senza estensione
+# Ignora tutto
 *
+# Ma non questi tipi di file
 !*.c
 !*.h
 !*.md
+!*.txt
 !.gitignore
+# Assicura che le directory non vengano ignorate completamente (per permettere la ricerca dei file re-inclusi)
+!*/
 
-# ignorare file di build e output
-a.out
-*.o
-*.exe
-*.out
-*.class
-*.jar
-*.pyc
+
 
 # ignorare file di configurazione dell'IDE
 .vscode/
