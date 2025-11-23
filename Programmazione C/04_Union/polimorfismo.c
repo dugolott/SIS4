@@ -141,3 +141,8 @@ int main() {
     
     return 0;
 }
+
+/* L'avvento del Polimorfismo e della Detipizzazione
+La tagged union è il modo del C di ottenere polimorfismo (stessa funzione, comportamenti diversi) e 
+type safety (controllo a runtime) senza OOP. È il ponte tra C puro e linguaggi moderni come Rust.
+*/
