@@ -1,11 +1,28 @@
 # Gestione dei File in C
 
-Questa pagina riassume l'uso dei file in C tramite la libreria standard `<stdio.h>`, con esempi chiari di:
+In C, la gestione dei file avviene principalmente tramite la libreria standard `<stdio.h>`. 
+Le operazioni sui file sono fondamentalmente:
+
 - apertura,
-- modalità di accesso (r/w/a, testo/binario),
-- lettura e scrittura,
-- chiusura,
-- gestione errori.
+- lettura,
+- scrittura,
+- chiusura.
+
+Al momento dell'apertura, è indispensabile specificare la modalità in cui si intende aprire il file (di `accesso`'). Le modalità più comuni sono:
+
+- lettura: `"r"`, ovvero non si può scrivere
+- scrittura: `"w"`, sovrascrive il file o lo crea se non esiste
+- append: `"a"`, aggiunge in coda (se il file non esiste, lo crea)
+
+Alcune di queste modalità non permettono di leggere dal file (es. `"w"` e `"a"`).
+Inoltre, possono essere combinate con il simbolo `+` per permettere sia la lettura che la scrittura (es. `"r+"`, `"w+"`, `"a+"`).
+Oltre a queste modalità di accesso, è necessario specificare se il file è di tipo **testo** o **binario** (quest'ultimo si ottiene aggiungendo la lettera `b` alla modalità di accesso, es. `"rb"`, `"wb"`).
+
+Seppure semplice, la gestione dei file passa attraverso **syscall** di basso livello, quindi è importante gestire correttamente errori e risorse allocate. Questo include:
+
+- controllare che l'apertura del file sia andata a buon fine,
+- chiudere sempre i file aperti con `fclose()` per evitare perdite di memoria e corruzione dei dati.
+- verificare errori di lettura/scrittura con `ferror()` e `feof()`.
 
 ---
 
@@ -21,7 +38,7 @@ if (!f) {
 
 Sintassi:
 ```
-fopen(nome_file, modalità);
+fopen(const char* file_path, const char* mode);
 ```
 Restituisce un `FILE*` oppure `NULL` in caso di errore.
 
@@ -97,9 +114,9 @@ fwrite(&x, sizeof(x), 1, f);
 fclose(f);
 ```
 Obbligatorio per:
-- svuotare il buffer,
-- liberare risorse,
-- evitare corruzione del file.
+- svuotare il buffer di scrittura (allocato dal Sistema Operativo),
+- liberare risorse associate al `descrittore` del file,
+- evitare corruzione del file stesso (forza il flush dei dati ancora presenti nel buffer).
 
 ---
 
@@ -107,17 +124,17 @@ Obbligatorio per:
 
 ### `ferror()`
 ```c
-if (ferror(f)) printf("Errore I/O\n");
+if (ferror(f)) printf("Errore I/O\n"); // dopo operazioni di lettura/scrittura ferror() restituisce un valore diverso da zero: codice di errore specifico, cui corrisponde un messaggio stampabile con perror()  
 ```
 
 ### `feof()` – fine file
 ```c
-while (!feof(f)) { ... }
+while (!feof(f)) { ... } // feof() ritorna 0 finché non si raggiunge la fine del file
 ```
 
 ### `perror()`
 ```c
-if (!f) perror("Impossibile aprire file");
+if (!f) perror("Impossibile aprire file"); // stampa il messaggio di errore associato all'ultima operazione di I/O fallita
 ```
 
 ---
@@ -125,15 +142,27 @@ if (!f) perror("Impossibile aprire file");
 ## 7. Esempio completo
 ```c
 FILE *f = fopen("numeri.txt", "w");
-if (!f) return 1;
+if (!f) {
+    perror("Errore apertura file: ");
+    return 1;
+}
 
-for (int i = 0; i < 10; i++)
+for (int i = 0; i < 10; i++){
     fprintf(f, "%d\n", i);
+    if (ferror(f)) {
+        perror("Errore scrittura file: ");
+        fclose(f);
+        return 1;
+    }
+}
 
 fclose(f);
 
 f = fopen("numeri.txt", "r");
-if (!f) return 1;
+if (!f) {
+    perror("Errore apertura file: ");
+    return 1;
+}
 
 int x;
 while (fscanf(f, "%d", &x) == 1)
@@ -143,4 +172,3 @@ fclose(f);
 ```
 
 ---
-
