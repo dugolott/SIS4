@@ -1,6 +1,6 @@
 # Esercizio – Programma `safe_copy` semplificato
 
-Leggi il seguente sorgente C **numerato** e rispondi ai quesiti a seguire.
+Leggi il seguente sorgente C e rispondi ai quesiti a seguire, senza testare il programma.
 
 ```c
   1  #include <stdio.h>
@@ -102,7 +102,8 @@ Leggi il seguente sorgente C **numerato** e rispondi ai quesiti a seguire.
 
 ---
 
-## Quesiti (risposte brevi/secche)
+## Quesiti di verifica
+
 Quando possibile, la risposta corretta dovrà essere esattamente l'output o il valore richiesto.
 
 1. Alle righe **5–9** viene dichiarato il tipo `S`: che cosa rappresenta il campo `b`?
