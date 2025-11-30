@@ -184,3 +184,77 @@ int main(void) {
 
 ---
 
+## **Esercizio 9**
+
+```c
+#include <stdio.h>
+
+typedef struct {
+    char name[20];
+    int age;
+    double salary;
+} employee_t;
+
+void stampa_eta(employee_t empls[]) {
+    int n = sizeof(empls) / sizeof(employee_t);  // ERRORE INTENZIONALE
+    for (int i = 0; i < n; i++) {
+        printf("%d\n", empls[i].age);
+    }
+}
+
+int main(void) {
+    employee_t empls[10] = {{"Jack", 43, 1956.8}};
+    stampa_eta(empls);
+    return 0;
+}
+```
+
+---
+
+## **Esercizio 10**
+
+```c
+#include <stdio.h>
+
+typedef struct {
+    char name[20];
+    int age;
+    double salary;
+} employee_t;
+
+int main(void) {
+    employee_t empls[10] = {{"Jack", 43, 1956.8}};
+    employee_t *pE = empls;
+
+    pE = pE + 10;   // ERRORE INTENZIONALE
+
+    printf("%d\n", pE->age);
+    return 0;
+}
+```
+
+---
+
+## ## **Esercizio 11**
+
+```c
+#include <stdio.h>
+
+typedef struct {
+    char name[20];
+    int age;
+    double salary;
+} employee_t;
+
+int main(void) {
+    employee_t *pE;     // ERRORE INTENZIONALE: puntatore non inizializzato
+
+    pE->age = 40;       // uso di un puntatore non valido
+    pE->salary = 2000;
+
+    printf("%d - %.2f\n", pE->age, pE->salary);
+
+    return 0;
+}
+
+```
